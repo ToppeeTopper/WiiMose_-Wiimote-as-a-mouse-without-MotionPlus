@@ -1,0 +1,35 @@
+﻿// Please look at the example before use.
+// Made it short for non readers!
+
+// = stuff that determines the input equality between up and down/left and right that is more important than anything else. =
+var.xtrim = -7.5
+var.ytrim = -7.5
+
+// = sensitivity, example : var.sens = 0.002 =
+var.sens = 0.002   // = smaller = slower, tweak as needed =
+
+// = smoothing vars (IMPORTANT, BELIEVE ME.) =
+var.smoothX = 0
+var.smoothY = 0
+var.smoothFactor = 0.3  // = 0 = no smoothing, 1 = very smooth but laggy
+
+// = stuff that does the math for controller tilt=
+var.accx = wiimote.RawForceX + var.xtrim
+var.accy = wiimote.RawForceY + var.ytrim
+
+// = smoothing stuffz =
+var.smoothX = (var.smoothX * (1 - var.smoothFactor)) + (var.accx * var.smoothFactor)
+var.smoothY = (var.smoothY * (1 - var.smoothFactor)) + (var.accy * var.smoothFactor)
+
+// = math stuff that makes it work =
+Mouse.X = Mouse.X - var.smoothX * var.sens
+Mouse.y = Mouse.y + var.smoothY * var.sens
+
+// = left click and right click, etc :P =
+Mouse.LeftButton = wiimote.A or wiimote.Nunchuk.z
+Mouse.RightButton = wiimote.B or wiimote.Nunchuk.C
+key.WASD = wiimote.Nunchuk.JoyX and wiimote.Nunchuk.JoyY
+Mouse.MiddleButton = wiimote.Up or wiimote.Down
+
+// = notify me of any updates/bugs i can add/fix!
+
